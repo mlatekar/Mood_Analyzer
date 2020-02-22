@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.Mood.MoodAnalyzer" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-02-21T07:01:09" hostname="admin1-Lenovo-Product" time="0.002">
+<testsuite name="com.Mood.MoodAnalyzer" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-02-22T04:58:39" hostname="admin1-Lenovo-Product" time="0.003">
   <properties/>
-  <testcase name="givenMethodName_WhenImproper_ShouldReturnNoSuchMethod" classname="com.Mood.MoodAnalyzer" time="0.002"/>
+  <testcase name="givenField_isNullMessage_ShouldThrowException" classname="com.Mood.MoodAnalyzer" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

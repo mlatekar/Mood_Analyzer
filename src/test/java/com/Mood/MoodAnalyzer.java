@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyzer {
 
@@ -101,12 +102,63 @@ public class MoodAnalyzer {
             Assert.assertEquals(MoodAnalyzerException.Exception.NO_SUCH_CLASS, e.type);
         }
     }
-    @Test
+   @Test
     public void givenMethodName_WhenImproper_ShouldReturnNoSuchMethod(){
         try {
-            Constructor<?> moodAnalyzerMain = MoodAnalyzerFactory.getConstructor("com.MoodMain.MoodAnalyzerMain", Integer.class);
+          Constructor<?> moodAnalyzerMain = MoodAnalyzerFactory.getConstructor("com.MoodMain.MoodAnalyzerMain", Integer.class);
+       }catch (MoodAnalyzerException e){
+           Assert.assertEquals(MoodAnalyzerException.Exception.NO_SUCH_METHOD,e.type);
+       }
+   }
+
+    @Test
+    public void givenHappyMessageUsingReflection_WhenProper_ShouldReturnHappyMood(){
+        String mood = null;
+        try {
+            mood = MoodAnalyzerFactory.invokeMethod("com.MoodMain.MoodAnalyzerMain", "I'm in a Happy mood","analyzeMood");
+            Assert.assertEquals("Happy",mood);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void givenMethodName_WhenImproper_ShouldReturnNoSuchMethodException() {
+        try {
+            String mood = MoodAnalyzerFactory.invokeMethod("com.MoodMain.MoodAnalyzerMain", "I'm in a Happy mood","analyzeMood");
+
         }catch (MoodAnalyzerException e){
             Assert.assertEquals(MoodAnalyzerException.Exception.NO_SUCH_METHOD,e.type);
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void givenField_WhenProper_ShouldReturnMessage() {
+        try {
+            String mood = MoodAnalyzerFactory.setFieldValues("I'm in a Sad mood","mood");
+            Assert.assertEquals("Sad",mood);
+        }catch (MoodAnalyzerException e){
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void givenField_WhenImProper_ShouldThrowException() {
+        try {
+            String mood = MoodAnalyzerFactory.setFieldValues("I'm in a Sad mood","mod");
+        }catch (MoodAnalyzerException e){
+            Assert.assertEquals(MoodAnalyzerException.Exception.NO_SUCH_FIELD,e.type);
+
+        }
+    }
+    @Test
+    public void givenField_isNullMessage_ShouldThrowException() {
+        try {
+            String mood = MoodAnalyzerFactory.setFieldValues(null,"mood");
+        }catch (MoodAnalyzerException e){
+            Assert.assertEquals(MoodAnalyzerException.Exception.FIELD_INVOCATION_ISSUE,e.type);
         }
     }
 }
